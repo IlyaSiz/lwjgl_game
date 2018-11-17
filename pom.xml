@@ -29,7 +29,10 @@
         <profile>
             <id>lwjgl-natives-linux</id>
             <activation>
-                <os><family>unix</family></os>
+                <os>
+                    <family>unix</family>
+                    <name>Linux</name>
+                </os>
             </activation>
             <properties>
                 <lwjgl.natives>natives-linux</lwjgl.natives>
