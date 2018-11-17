@@ -1,6 +1,6 @@
 package com.sizphoto.shiningproject;
 
-import com.sizphoto.shiningproject.service.ApplicationRunService;
+import com.sizphoto.shiningproject.engine.GameEngine;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringBootStandaloneApplication implements CommandLineRunner {
 
-    private ApplicationRunService applicationRunService;
+    private GameEngine gameEngine;
 
-    public SpringBootStandaloneApplication(final ApplicationRunService applicationRunService){
-        this.applicationRunService = applicationRunService;
+    public SpringBootStandaloneApplication(final GameEngine gameEngine){
+        this.gameEngine = gameEngine;
     }
 
     public static void main(String[] args) {
@@ -21,6 +21,6 @@ public class SpringBootStandaloneApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        applicationRunService.run();
+        gameEngine.run();
     }
 }

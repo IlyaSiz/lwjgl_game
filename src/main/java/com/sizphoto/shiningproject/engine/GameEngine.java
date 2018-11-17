@@ -1,4 +1,4 @@
-package com.sizphoto.shiningproject.service;
+package com.sizphoto.shiningproject.engine;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -19,10 +19,10 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import static com.sizphoto.shiningproject.utils.Constant.*;
 
-@Service
-public class ApplicationRunService {
+@Component
+public class GameEngine {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationRunService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameEngine.class);
 
     @Value("${application.title}")
     private String title;
