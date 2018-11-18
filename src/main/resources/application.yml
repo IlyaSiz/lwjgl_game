@@ -1,2 +1,8 @@
 application:
   title: "Shining project"
+
+window:
+  title: "Shining project"
+  width: 500
+  height: 500
+  vSync: true

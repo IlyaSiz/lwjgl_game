@@ -1,132 +1,101 @@
 package com.sizphoto.shiningproject.engine;
 
-import org.lwjgl.Version;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
+import com.sizphoto.shiningproject.game.IGameLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
-import static com.sizphoto.shiningproject.utils.Constant.*;
+import static com.sizphoto.shiningproject.utils.Constant.TARGET_FPS;
+import static com.sizphoto.shiningproject.utils.Constant.TARGET_UPS;
 
 @Component
-public class GameEngine {
+public class GameEngine implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEngine.class);
 
-    @Value("${application.title}")
-    private String title;
+    private Window window;
 
-    // The window handle
-    private Long window;
+    private Timer timer;
 
-    public void run() {
-        LOGGER.info("run() - Starting {} application. LWJGL v.{}!", title, Version.getVersion());
+    private IGameLogic gameLogic;
 
-        try {
-            init();
-            loop();
+    private final Thread gameLoopThread;
 
-            // Release window and window callbacks
-            glfwFreeCallbacks(window);
-            glfwDestroyWindow(window);
-        } finally {
-            // Terminate GLFW and release the GLFWerrorfun (free the error callback)
-            glfwTerminate();
-            GLFWErrorCallback errorCallback = glfwSetErrorCallback(null);
-            if (errorCallback != null) {
-                errorCallback.free();
-            } else {
-                LOGGER.error("init() - errorCallback is null");
-            }
-        }
+    public GameEngine(final Window window, final Timer timer, final IGameLogic gameLogic) {
+        this.gameLoopThread = new Thread(this, "GAME_LOOP_THREAD");
+        this.window = window;
+        this.timer = timer;
+        this.gameLogic = gameLogic;
     }
 
-    private void init() {
-        // Setup an error callback. The default implementation
-        // will print the error message in System.err.
-        GLFWErrorCallback.createPrint(System.err).set();
-
-        // Initialize GLFW. Most GLFW functions will not work before doing this.
-        if (!glfwInit()) {
-            LOGGER.error("init() - Unable to initialize GLFW");
-            throw new IllegalStateException("Unable to initialize GLFW");
-        }
-
-        // Configure the window
-        glfwDefaultWindowHints(); // optional, the current window hints are already the default
-        glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // the window will be resizable
-
-        // Create the window
-        window = glfwCreateWindow(INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT, title, NULL, NULL);
-        if (window == NULL) {
-            LOGGER.error("init() - Failed to create the GLFW window");
-            throw new RuntimeException("Failed to create the GLFW window");
-        }
-
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-            }
-        });
-
-        // Get the resolution of the primary monitor
-        GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        // Center the window
-        if (vidMode != null) {
-            glfwSetWindowPos(
-                    window,
-                    (vidMode.width() - INITIAL_WINDOW_WIDTH) / 2,
-                    (vidMode.height() - INITIAL_WINDOW_HEIGHT) / 2
-            );
+    public void start() {
+        String osName = System.getProperty("os.name");
+        LOGGER.info("start() - Starting on {} operating system", osName);
+        if ( osName.contains("Mac") ) {
+            this.gameLoopThread.run();
         } else {
-            LOGGER.error("init() - vidMode (the resolution of the primary monitor) is null");
-            throw new NullPointerException("vidMode is null");
+            this.gameLoopThread.start();
         }
-
-        // Make the OpenGL context current
-        glfwMakeContextCurrent(window);
-
-        // Enable v-sync
-        glfwSwapInterval(1);
-
-        // Make the window visible
-        glfwShowWindow(window);
     }
 
-    private void loop() {
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
-        // creates the ContextCapabilities instance and makes the OpenGL
-        // bindings available for use.
-        GL.createCapabilities();
-
-        // Set the clear color
-        glClearColor(0.0f, 0.5f, 0.5f, 0.0f);
-
-        // Run the rendering loop until the user has attempted to close
-        // the window or has pressed the ESCAPE key.
-        while (!glfwWindowShouldClose(window)) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-
-            glfwSwapBuffers(window); // swap the color buffers
-
-            // Poll for window events. The key callback above will only be
-            // invoked during this call.
-            glfwPollEvents();
+    @Override
+    public void run() {
+        try {
+            this.init();
+            this.gameLoop();
+        } catch (Exception exception) {
+            LOGGER.error("run() - Game engine run failed: {}", exception.getMessage());
+            exception.printStackTrace();
         }
+    }
+
+    private void init() throws Exception {
+        this.window.init();
+        this.timer.init();
+        this.gameLogic.init();
+    }
+
+    private void gameLoop() {
+        float elapsedTime;
+        float accumulator = 0f;
+        float interval = 1f / TARGET_UPS;
+        while (!this.window.windowShouldClose()) {
+            elapsedTime = this.timer.getElapsedTime();
+            accumulator += elapsedTime;
+            this.input();
+            while (accumulator >= interval) {
+                update(interval);
+                accumulator -= interval;
+            }
+            this.render();
+            if (!this.window.isvSync()) {
+                sync();
+            }
+        }
+    }
+
+    private void sync() {
+        float loopSlot = 1f / TARGET_FPS;
+        double endTime = this.timer.getLastLoopTime() + loopSlot;
+        while (this.timer.getTime() < endTime) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
+        }
+    }
+
+    private void input() {
+        this.gameLogic.input(this.window);
+    }
+
+    private void update(float interval) {
+        this.gameLogic.update(interval);
+    }
+
+    private void render() {
+        this.gameLogic.render(this.window);
+        this.window.update();
     }
 }
