@@ -70,7 +70,7 @@ public class ShaderProgram {
         // state is not complete enough to run the shader (some data may have not been uploaded yet).
         glValidateProgram(programId);
         if (glGetProgrami(programId, GL_VALIDATE_STATUS) == 0) {
-            LOGGER.error("link() - Warning validating Shader code: {}", glGetProgramInfoLog(programId, 1024));
+            LOGGER.warn("link() - Warning validating Shader code: {}", glGetProgramInfoLog(programId, 1024));
         }
 
     }
