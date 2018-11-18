@@ -1,11 +1,16 @@
 package com.sizphoto.shiningproject.engine;
 
 import com.sizphoto.shiningproject.engine.graph.ShaderProgram;
+import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.system.MemoryUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.nio.FloatBuffer;
 
+import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
@@ -19,6 +24,8 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 @Component
 public class Renderer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Renderer.class);
 
     private int vboId;
 
@@ -109,5 +116,14 @@ public class Renderer {
         // Delete the VAO
         glBindVertexArray(0);
         glDeleteVertexArrays(vaoId);
+
+        // Terminate GLFW and free the error callback
+        glfwTerminate();
+        GLFWErrorCallback errorCallback = glfwSetErrorCallback(null);
+        if (errorCallback != null) {
+            errorCallback.free();
+        } else {
+            LOGGER.error("cleanup() - errorCallback is null");
+        }
     }
 }

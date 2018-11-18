@@ -97,7 +97,8 @@ public class GameEngine implements Runnable {
     }
 
     private void cleanup() {
-        gameLogic.cleanup();
+        this.window.release();
+        this.gameLogic.cleanup();
     }
 
     private void render() {
