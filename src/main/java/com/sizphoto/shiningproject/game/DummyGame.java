@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
-import static org.lwjgl.opengl.GL11.glViewport;
 
 @Component
 @Primary
@@ -51,12 +50,12 @@ public class DummyGame implements IGameLogic {
 
     @Override
     public void render(Window window) {
-        if ( window.isResized() ) {
-            glViewport(0, 0, window.getWidth(), window.getHeight());
-            window.setResized(false);
-        }
-
         window.setClearColor(color, color, color, 0.0f);
-        renderer.clear();
+        this.renderer.render(window);
+    }
+
+    @Override
+    public void cleanup() {
+        this.renderer.cleanup();
     }
 }

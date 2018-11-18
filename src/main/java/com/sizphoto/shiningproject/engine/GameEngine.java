@@ -46,6 +46,8 @@ public class GameEngine implements Runnable {
         } catch (Exception exception) {
             LOGGER.error("run() - Game engine run failed: {}", exception.getMessage());
             exception.printStackTrace();
+        } finally {
+            this.cleanup();
         }
     }
 
@@ -92,6 +94,10 @@ public class GameEngine implements Runnable {
 
     private void update(float interval) {
         this.gameLogic.update(interval);
+    }
+
+    private void cleanup() {
+        gameLogic.cleanup();
     }
 
     private void render() {
