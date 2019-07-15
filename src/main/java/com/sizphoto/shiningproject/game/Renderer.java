@@ -72,7 +72,7 @@ public class Renderer {
         shaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
         // Render each gameItem
-        for(GameItem gameItem : gameItems) {
+        for (GameItem gameItem : gameItems) {
             // Set world matrix for this item
             Matrix4f worldMatrix = transformation.getWorldMatrix(gameItem.getPosition(), gameItem.getRotation(), gameItem.getScale());
             shaderProgram.setUniform("worldMatrix", worldMatrix);

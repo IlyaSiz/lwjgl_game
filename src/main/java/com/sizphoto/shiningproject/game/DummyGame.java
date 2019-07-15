@@ -34,10 +34,10 @@ public class DummyGame implements IGameLogic {
         renderer.init(window);
         // Create the Mesh
         float[] positions = new float[]{
-                -0.5f,  0.5f,  0.5f,
-                -0.5f, -0.5f,  0.5f,
-                0.5f, -0.5f,  0.5f,
-                0.5f,  0.5f,  0.5f,
+                -0.5f, 0.5f, 0.5f,
+                -0.5f, -0.5f, 0.5f,
+                0.5f, -0.5f, 0.5f,
+                0.5f, 0.5f, 0.5f,
         };
         float[] colours = new float[]{
                 0.5f, 0.0f, 0.0f,
@@ -49,7 +49,7 @@ public class DummyGame implements IGameLogic {
         Mesh mesh = new Mesh(positions, colours, indices);
         GameItem gameItem = new GameItem(mesh);
         gameItem.setPosition(0, 0, -2);
-        gameItems = new GameItem[] { gameItem };
+        gameItems = new GameItem[]{gameItem};
     }
 
     @Override
@@ -90,14 +90,14 @@ public class DummyGame implements IGameLogic {
             // Update scale
             float scale = gameItem.getScale();
             scale += scaleInc * 0.05f;
-            if ( scale < 0 ) {
+            if (scale < 0) {
                 scale = 0;
             }
             gameItem.setScale(scale);
 
             // Update rotation angle
             float rotation = gameItem.getRotation().z + 1.5f;
-            if ( rotation > 360 ) {
+            if (rotation > 360) {
                 rotation = 0;
             }
             gameItem.setRotation(0, 0, rotation);

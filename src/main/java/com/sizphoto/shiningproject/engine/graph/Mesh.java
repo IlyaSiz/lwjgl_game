@@ -1,6 +1,7 @@
 package com.sizphoto.shiningproject.engine.graph;
 
 import org.lwjgl.system.MemoryUtil;
+
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -19,7 +20,7 @@ public class Mesh {
     private final int vertexCount;
 
     public Mesh(float[] positions, float[] colours, int[] indices) {
-        FloatBuffer posBuffer  = null;
+        FloatBuffer posBuffer = null;
         FloatBuffer colourBuffer = null;
         IntBuffer indicesBuffer = null;
         try {

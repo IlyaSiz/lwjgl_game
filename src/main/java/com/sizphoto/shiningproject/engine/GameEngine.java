@@ -31,7 +31,7 @@ public class GameEngine implements Runnable {
     public void start() {
         String osName = System.getProperty("os.name");
         LOGGER.info("start() - Starting on {} operating system", osName);
-        if ( osName.contains("Mac") ) {
+        if (osName.contains("Mac")) {
             this.gameLoopThread.run();
         } else {
             this.gameLoopThread.start();
