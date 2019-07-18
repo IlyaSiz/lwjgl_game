@@ -4,6 +4,7 @@ import com.sizphoto.shiningproject.engine.GameItem;
 import com.sizphoto.shiningproject.engine.Utils;
 import com.sizphoto.shiningproject.engine.Window;
 import com.sizphoto.shiningproject.engine.graph.Camera;
+import com.sizphoto.shiningproject.engine.graph.Mesh;
 import com.sizphoto.shiningproject.engine.graph.ShaderProgram;
 import com.sizphoto.shiningproject.engine.graph.Transformation;
 import org.joml.Matrix4f;
@@ -50,6 +51,9 @@ public class Renderer {
         shaderProgram.createUniform("projectionMatrix");
         shaderProgram.createUniform("modelViewMatrix");
         shaderProgram.createUniform("texture_sampler");
+        // Create uniform for default colour and the flag that controls it
+        shaderProgram.createUniform("colour");
+        shaderProgram.createUniform("useColour");
     }
 
     private void clear() {
@@ -77,11 +81,14 @@ public class Renderer {
         shaderProgram.setUniform("texture_sampler", 0);
         // Render each gameItem
         for (GameItem gameItem : gameItems) {
+            Mesh mesh = gameItem.getMesh();
             // Set model view matrix for this item
             Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItem, viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mesh for this game item
-            gameItem.getMesh().render();
+            shaderProgram.setUniform("colour", mesh.getColour());
+            shaderProgram.setUniform("useColour", mesh.isTextured() ? 0 : 1);
+            mesh.render();
         }
 
         this.shaderProgram.unbind();

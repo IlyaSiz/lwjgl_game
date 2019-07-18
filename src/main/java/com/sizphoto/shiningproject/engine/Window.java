@@ -115,6 +115,9 @@ public class Window {
 
         // Enable depth testing
         glEnable(GL_DEPTH_TEST);
+
+        // uncomment this to show polygons without filling
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
     public long getWindowHandle() {

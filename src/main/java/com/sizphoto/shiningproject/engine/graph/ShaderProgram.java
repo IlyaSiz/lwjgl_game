@@ -1,6 +1,7 @@
 package com.sizphoto.shiningproject.engine.graph;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.system.MemoryStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,10 @@ public class ShaderProgram {
             value.get(fb);
             glUniformMatrix4fv(uniforms.get(uniformName), false, fb);
         }
+    }
+
+    public void setUniform(String uniformName, Vector3f value) {
+        glUniform3f(uniforms.get(uniformName), value.x, value.y, value.z);
     }
 
     public void setUniform(String uniformName, int value) {
