@@ -1,6 +1,5 @@
 package com.sizphoto.shiningproject.engine.graph;
 
-import org.joml.Vector3f;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.FloatBuffer;
