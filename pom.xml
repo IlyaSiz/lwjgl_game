@@ -15,7 +15,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.0.RELEASE</version>
-        <relativePath />
+        <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
 
@@ -42,7 +42,9 @@
         <profile>
             <id>lwjgl-natives-macos</id>
             <activation>
-                <os><family>mac</family></os>
+                <os>
+                    <family>mac</family>
+                </os>
             </activation>
             <properties>
                 <lwjgl.natives>natives-macos</lwjgl.natives>
@@ -51,7 +53,9 @@
         <profile>
             <id>lwjgl-natives-windows</id>
             <activation>
-                <os><family>windows</family></os>
+                <os>
+                    <family>windows</family>
+                </os>
             </activation>
             <properties>
                 <lwjgl.natives>natives-windows</lwjgl.natives>
