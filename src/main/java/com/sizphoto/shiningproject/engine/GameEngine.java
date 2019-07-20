@@ -15,15 +15,18 @@ public class GameEngine implements Runnable {
 
     private Window window;
 
+    private final Thread gameLoopThread;
+
     private Timer timer;
 
     private IGameLogic gameLogic;
 
-    private final Thread gameLoopThread;
+    private final MouseInput mouseInput;
 
     public GameEngine(final Window window, final Timer timer, final IGameLogic gameLogic) {
-        this.gameLoopThread = new Thread(this, "GAME_LOOP_THREAD");
+        gameLoopThread = new Thread(this, "GAME_LOOP_THREAD");
         this.window = window;
+        mouseInput = new MouseInput();
         this.timer = timer;
         this.gameLogic = gameLogic;
     }
@@ -31,7 +34,7 @@ public class GameEngine implements Runnable {
     public void start() {
         String osName = System.getProperty("os.name");
         LOGGER.info("start() - Starting on {} operating system", osName);
-        if ( osName.contains("Mac") ) {
+        if (osName.contains("Mac")) {
             this.gameLoopThread.run();
         } else {
             this.gameLoopThread.start();
@@ -54,22 +57,28 @@ public class GameEngine implements Runnable {
     private void init() throws Exception {
         this.window.init();
         this.timer.init();
-        this.gameLogic.init();
+        this.mouseInput.init(window);
+        this.gameLogic.init(window);
     }
 
     private void gameLoop() {
         float elapsedTime;
         float accumulator = 0f;
         float interval = 1f / TARGET_UPS;
+
         while (!this.window.windowShouldClose()) {
             elapsedTime = this.timer.getElapsedTime();
             accumulator += elapsedTime;
+
             this.input();
+
             while (accumulator >= interval) {
                 update(interval);
                 accumulator -= interval;
             }
+
             this.render();
+
             if (!this.window.isvSync()) {
                 sync();
             }
@@ -89,11 +98,12 @@ public class GameEngine implements Runnable {
     }
 
     private void input() {
-        this.gameLogic.input(this.window);
+        mouseInput.input(window);
+        gameLogic.input(window, mouseInput);
     }
 
     private void update(float interval) {
-        this.gameLogic.update(interval);
+        gameLogic.update(interval, mouseInput);
     }
 
     private void cleanup() {

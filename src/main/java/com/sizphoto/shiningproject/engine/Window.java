@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.GL_TRUE;
-import static org.lwjgl.opengl.GL11.GL_FALSE;
-import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Component
@@ -113,7 +111,17 @@ public class Window {
         GL.createCapabilities();
 
         // Set the clear color
-        this.setClearColor(0.0f, 0.5f, 0.5f, 0.0f);
+        setClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        // Enable depth testing
+        glEnable(GL_DEPTH_TEST);
+
+        // uncomment this to show polygons without filling
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+
+    public long getWindowHandle() {
+        return windowHandle;
     }
 
     public void setClearColor(float r, float g, float b, float alpha) {
