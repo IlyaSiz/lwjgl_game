@@ -29,7 +29,8 @@ public class SpringBootStandaloneApplication implements CommandLineRunner {
             gameEngine.start();
         } catch (Exception exception) {
             LOGGER.error("run() - Failed to run application");
-            System.exit(-1);
+            // System.exit(-1);
+            throw new RuntimeException("Failed to run application");
         }
     }
 }

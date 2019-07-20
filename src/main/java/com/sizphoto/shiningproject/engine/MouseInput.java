@@ -19,7 +19,7 @@ public class MouseInput {
 
     private boolean rightButtonPressed = false;
 
-    public MouseInput() {
+    MouseInput() {
         previousPos = new Vector2d(-1, -1);
         currentPos = new Vector2d(0, 0);
         displVec = new Vector2f();
@@ -30,9 +30,7 @@ public class MouseInput {
             currentPos.x = xpos;
             currentPos.y = ypos;
         });
-        glfwSetCursorEnterCallback(window.getWindowHandle(), (windowHandle, entered) -> {
-            inWindow = entered;
-        });
+        glfwSetCursorEnterCallback(window.getWindowHandle(), (windowHandle, entered) -> inWindow = entered);
         glfwSetMouseButtonCallback(window.getWindowHandle(), (windowHandle, button, action, mode) -> {
             leftButtonPressed = button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS;
             rightButtonPressed = button == GLFW_MOUSE_BUTTON_2 && action == GLFW_PRESS;

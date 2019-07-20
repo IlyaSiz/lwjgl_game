@@ -117,14 +117,14 @@ public class Window {
         glEnable(GL_DEPTH_TEST);
 
         // uncomment this to show polygons without filling
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
     public long getWindowHandle() {
         return windowHandle;
     }
 
-    public void setClearColor(float r, float g, float b, float alpha) {
+    private void setClearColor(float r, float g, float b, float alpha) {
         glClearColor(r, g, b, alpha);
     }
 
