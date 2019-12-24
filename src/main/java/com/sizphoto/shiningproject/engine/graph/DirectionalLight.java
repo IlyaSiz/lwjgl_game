@@ -10,13 +10,13 @@ public class DirectionalLight {
 
     private float intensity;
 
-    public DirectionalLight(Vector3f color, Vector3f direction, float intensity) {
+    public DirectionalLight(final Vector3f color, final Vector3f direction, final float intensity) {
         this.color = color;
         this.direction = direction;
         this.intensity = intensity;
     }
 
-    public DirectionalLight(DirectionalLight light) {
+    public DirectionalLight(final DirectionalLight light) {
         this(new Vector3f(light.getColor()), new Vector3f(light.getDirection()), light.getIntensity());
     }
 
@@ -24,7 +24,7 @@ public class DirectionalLight {
         return color;
     }
 
-    public void setColor(Vector3f color) {
+    public void setColor(final Vector3f color) {
         this.color = color;
     }
 
@@ -32,15 +32,15 @@ public class DirectionalLight {
         return direction;
     }
 
-    public void setDirection(Vector3f direction) {
+    public void setDirection(final Vector3f direction) {
         this.direction = direction;
     }
 
-    public float getIntensity() {
+    float getIntensity() {
         return intensity;
     }
 
-    public void setIntensity(float intensity) {
+    public void setIntensity(final float intensity) {
         this.intensity = intensity;
     }
 }

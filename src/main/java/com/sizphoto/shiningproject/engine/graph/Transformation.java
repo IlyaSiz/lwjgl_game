@@ -3,7 +3,9 @@ package com.sizphoto.shiningproject.engine.graph;
 import com.sizphoto.shiningproject.engine.GameItem;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Transformation {
 
     private final Matrix4f modelViewMatrix;

@@ -19,7 +19,12 @@ public class Mesh {
 
     private Material material;
 
-    Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices) {
+    Mesh(
+            final float[] positions,
+            final float[] textCoords,
+            final float[] normals,
+            final int[] indices
+    ) {
         FloatBuffer posBuffer = null;
         FloatBuffer textCoordsBuffer = null;
         FloatBuffer vecNormalsBuffer = null;
@@ -100,20 +105,12 @@ public class Mesh {
         return material;
     }
 
-    public void setMaterial(Material material) {
+    public void setMaterial(final Material material) {
         this.material = material;
     }
 
-    private int getVaoId() {
-        return vaoId;
-    }
-
-    private int getVertexCount() {
-        return vertexCount;
-    }
-
     public void render() {
-        Texture texture = material.getTexture();
+        final Texture texture = material.getTexture();
         if (texture != null) {
             // Activate firs texture bank
             glActiveTexture(GL_TEXTURE0);
@@ -147,7 +144,7 @@ public class Mesh {
         }
 
         // Delete the texture
-        Texture texture = material.getTexture();
+        final Texture texture = material.getTexture();
         if (texture != null) {
             texture.cleanup();
         }
@@ -155,5 +152,13 @@ public class Mesh {
         // Delete the VAO
         glBindVertexArray(0);
         glDeleteVertexArrays(vaoId);
+    }
+
+    private int getVaoId() {
+        return vaoId;
+    }
+
+    private int getVertexCount() {
+        return vertexCount;
     }
 }

@@ -10,6 +10,7 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
@@ -24,6 +25,8 @@ public class Renderer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Renderer.class);
 
+    private Transformation transformation;
+
     // Field of View in Radians
     private static final float FOV = (float) Math.toRadians(60.0f);
 
@@ -35,18 +38,19 @@ public class Renderer {
 
     private static final int MAX_SPOT_LIGHTS = 5;
 
-    private final Transformation transformation;
-
     private ShaderProgram shaderProgram;
 
     private float specularPower;
 
-    public Renderer() {
-        transformation = new Transformation();
+    @Autowired
+    public Renderer(
+            final Transformation transformation
+    ) {
+        this.transformation = transformation;
         specularPower = 10f;
     }
 
-    public void init(Window window) throws Exception {
+    void init(Window window) throws Exception {
         // Create shader
         this.shaderProgram = new ShaderProgram();
         this.shaderProgram.createVertexShader(Utils.loadResource("/shaders/vertex.vert"));
@@ -72,8 +76,8 @@ public class Renderer {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, Camera camera, GameItem[] gameItems, Vector3f ambientLight,
-                       PointLight[] pointLightList, SpotLight[] spotLightList, DirectionalLight directionalLight) {
+    void render(Window window, Camera camera, GameItem[] gameItems, Vector3f ambientLight,
+                PointLight[] pointLightList, SpotLight[] spotLightList, DirectionalLight directionalLight) {
 
         clear();
 
@@ -157,7 +161,7 @@ public class Renderer {
 
     }
 
-    public void cleanup() {
+    void cleanup() {
         if (this.shaderProgram != null) {
             this.shaderProgram.cleanup();
         }

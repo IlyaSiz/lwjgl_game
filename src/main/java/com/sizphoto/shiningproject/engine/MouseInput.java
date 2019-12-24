@@ -2,9 +2,11 @@ package com.sizphoto.shiningproject.engine;
 
 import org.joml.Vector2d;
 import org.joml.Vector2f;
+import org.springframework.stereotype.Component;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+@Component
 public class MouseInput {
 
     private final Vector2d previousPos;
@@ -25,7 +27,7 @@ public class MouseInput {
         displVec = new Vector2f();
     }
 
-    public void init(Window window) {
+    void init(final Window window) {
         glfwSetCursorPosCallback(window.getWindowHandle(), (windowHandle, xpos, ypos) -> {
             currentPos.x = xpos;
             currentPos.y = ypos;
@@ -41,14 +43,14 @@ public class MouseInput {
         return displVec;
     }
 
-    public void input(Window window) {
+    void input(final Window window) {
         displVec.x = 0;
         displVec.y = 0;
         if (previousPos.x > 0 && previousPos.y > 0 && inWindow) {
-            double deltax = currentPos.x - previousPos.x;
-            double deltay = currentPos.y - previousPos.y;
-            boolean rotateX = deltax != 0;
-            boolean rotateY = deltay != 0;
+            final double deltax = currentPos.x - previousPos.x;
+            final double deltay = currentPos.y - previousPos.y;
+            final boolean rotateX = deltax != 0;
+            final boolean rotateY = deltay != 0;
             if (rotateX) {
                 displVec.y = (float) deltax;
             }

@@ -39,7 +39,7 @@ public class SpotLight {
         this.coneDirection = coneDirection;
     }
 
-    public float getCutOff() {
+    float getCutOff() {
         return cutOff;
     }
 

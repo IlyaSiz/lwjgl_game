@@ -5,6 +5,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,27 +19,33 @@ public class Window {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Window.class);
 
-    @Value("${window.title}")
     private String title;
 
-    @Value("${window.width}")
     private int width;
 
-    @Value("${window.height}")
     private int height;
 
-    @Value("${window.vSync}")
     private boolean vSync;
-
-    private long windowHandle;
 
     private boolean resized;
 
-    public Window() {
+    private long windowHandle;
+
+    @Autowired
+    public Window(
+            @Value("${window.title}") final String title,
+            @Value("${window.width}") final int width,
+            @Value("${window.height}") final int height,
+            @Value("${window.vSync}") final boolean vSync
+    ) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+        this.vSync = vSync;
         this.resized = false;
     }
 
-    public void init() {
+    void init() {
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
@@ -79,7 +86,7 @@ public class Window {
         });
 
         // Get the resolution of the primary monitor
-        GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        final GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         // Center the window
         if (vidMode != null) {
             glfwSetWindowPos(
@@ -120,19 +127,15 @@ public class Window {
         // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
-    public long getWindowHandle() {
+    long getWindowHandle() {
         return windowHandle;
     }
 
-    private void setClearColor(float r, float g, float b, float alpha) {
-        glClearColor(r, g, b, alpha);
-    }
-
-    public boolean isKeyPressed(int keyCode) {
+    public boolean isKeyPressed(final int keyCode) {
         return glfwGetKey(windowHandle, keyCode) == GLFW_PRESS;
     }
 
-    public boolean windowShouldClose() {
+    boolean windowShouldClose() {
         return glfwWindowShouldClose(windowHandle);
     }
 
@@ -152,19 +155,19 @@ public class Window {
         return resized;
     }
 
-    public void setResized(boolean resized) {
+    public void setResized(final boolean resized) {
         this.resized = resized;
     }
 
-    public boolean isvSync() {
+    boolean isvSync() {
         return vSync;
     }
 
-    public void setvSync(boolean vSync) {
+    public void setvSync(final boolean vSync) {
         this.vSync = vSync;
     }
 
-    public void update() {
+    void update() {
         // swap the color buffers
         glfwSwapBuffers(windowHandle);
 
@@ -173,9 +176,13 @@ public class Window {
         glfwPollEvents();
     }
 
-    public void release() {
+    void release() {
         // Release window and window callbacks
         glfwFreeCallbacks(windowHandle);
         glfwDestroyWindow(windowHandle);
+    }
+
+    private void setClearColor(final float r, final float g, final float b, final float alpha) {
+        glClearColor(r, g, b, alpha);
     }
 }

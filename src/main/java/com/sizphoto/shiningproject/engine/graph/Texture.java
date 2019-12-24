@@ -28,7 +28,7 @@ public class Texture {
         glBindTexture(GL_TEXTURE_2D, id);
     }
 
-    public int getId() {
+    int getId() {
         return id;
     }
 
@@ -76,7 +76,7 @@ public class Texture {
         return textureId;
     }
 
-    public void cleanup() {
+    void cleanup() {
         glDeleteTextures(id);
     }
 }

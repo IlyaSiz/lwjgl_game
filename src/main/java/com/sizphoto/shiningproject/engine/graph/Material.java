@@ -24,19 +24,25 @@ public class Material {
         this.reflectance = 0;
     }
 
-    public Material(Vector4f colour, float reflectance) {
+    public Material(final Vector4f colour, final float reflectance) {
         this(colour, colour, colour, null, reflectance);
     }
 
-    public Material(Texture texture) {
+    public Material(final Texture texture) {
         this(DEFAULT_COLOUR, DEFAULT_COLOUR, DEFAULT_COLOUR, texture, 0);
     }
 
-    public Material(Texture texture, float reflectance) {
+    public Material(final Texture texture, final float reflectance) {
         this(DEFAULT_COLOUR, DEFAULT_COLOUR, DEFAULT_COLOUR, texture, reflectance);
     }
 
-    private Material(Vector4f ambientColour, Vector4f diffuseColour, Vector4f specularColour, Texture texture, float reflectance) {
+    private Material(
+            final Vector4f ambientColour,
+            final Vector4f diffuseColour,
+            final Vector4f specularColour,
+            final Texture texture,
+            final float reflectance
+    ) {
         this.ambientColour = ambientColour;
         this.diffuseColour = diffuseColour;
         this.specularColour = specularColour;
@@ -44,47 +50,47 @@ public class Material {
         this.reflectance = reflectance;
     }
 
-    public Vector4f getAmbientColour() {
+    Vector4f getAmbientColour() {
         return ambientColour;
     }
 
-    public void setAmbientColour(Vector4f ambientColour) {
+    public void setAmbientColour(final Vector4f ambientColour) {
         this.ambientColour = ambientColour;
     }
 
-    public Vector4f getDiffuseColour() {
+    Vector4f getDiffuseColour() {
         return diffuseColour;
     }
 
-    public void setDiffuseColour(Vector4f diffuseColour) {
+    public void setDiffuseColour(final Vector4f diffuseColour) {
         this.diffuseColour = diffuseColour;
     }
 
-    public Vector4f getSpecularColour() {
+    Vector4f getSpecularColour() {
         return specularColour;
     }
 
-    public void setSpecularColour(Vector4f specularColour) {
+    public void setSpecularColour(final Vector4f specularColour) {
         this.specularColour = specularColour;
     }
 
-    public float getReflectance() {
+    float getReflectance() {
         return reflectance;
     }
 
-    public void setReflectance(float reflectance) {
+    public void setReflectance(final float reflectance) {
         this.reflectance = reflectance;
     }
 
-    public boolean isTextured() {
+    boolean isTextured() {
         return this.texture != null;
     }
 
-    public Texture getTexture() {
+    Texture getTexture() {
         return texture;
     }
 
-    public void setTexture(Texture texture) {
+    public void setTexture(final Texture texture) {
         this.texture = texture;
     }
 }
