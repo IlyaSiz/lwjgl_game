@@ -5,4 +5,4 @@ window:
   title: "Shining project"
   width: 800
   height: 600
-  vSync: true
+  vsync: true

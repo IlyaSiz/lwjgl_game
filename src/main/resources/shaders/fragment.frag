@@ -108,7 +108,7 @@ vec4 calcPointLight(PointLight light, vec3 position, vec3 normal)
     // Apply Attenuation
     float distance = length(light_direction);
     float attenuationInv = light.att.constant + light.att.linear * distance +
-        light.att.exponent * distance * distance;
+    light.att.exponent * distance * distance;
     return light_colour / attenuationInv;
 }
 
@@ -121,7 +121,7 @@ vec4 calcSpotLight(SpotLight light, vec3 position, vec3 normal)
 
     vec4 colour = vec4(0, 0, 0, 0);
 
-    if ( spot_alfa > light.cutoff )
+    if (spot_alfa > light.cutoff)
     {
         colour = calcPointLight(light.pl, position, normal);
         colour *= (1.0 - (1.0 - spot_alfa)/(1.0 - light.cutoff));
@@ -142,7 +142,7 @@ void main()
 
     for (int i=0; i<MAX_POINT_LIGHTS; i++)
     {
-        if ( pointLights[i].intensity > 0 )
+        if (pointLights[i].intensity > 0)
         {
             diffuseSpecularComp += calcPointLight(pointLights[i], mvVertexPos, mvVertexNormal);
         }
@@ -150,7 +150,7 @@ void main()
 
     for (int i=0; i<MAX_SPOT_LIGHTS; i++)
     {
-        if ( spotLights[i].pl.intensity > 0 )
+        if (spotLights[i].pl.intensity > 0)
         {
             diffuseSpecularComp += calcSpotLight(spotLights[i], mvVertexPos, mvVertexNormal);
         }
