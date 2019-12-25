@@ -164,13 +164,13 @@ public class DummyGame implements IGameLogic {
         } else if (lightAngle <= -80 || lightAngle >= 80) {
             final float factor = 1 - (Math.abs(lightAngle) - 80) / 10.0f;
             directionalLight.setIntensity(factor);
-            directionalLight.getColor().y = Math.max(factor, 0.9f);
-            directionalLight.getColor().z = Math.max(factor, 0.5f);
+            directionalLight.getColour().y = Math.max(factor, 0.9f);
+            directionalLight.getColour().z = Math.max(factor, 0.5f);
         } else {
             directionalLight.setIntensity(1);
-            directionalLight.getColor().x = 1;
-            directionalLight.getColor().y = 1;
-            directionalLight.getColor().z = 1;
+            directionalLight.getColour().x = 1;
+            directionalLight.getColour().y = 1;
+            directionalLight.getColour().z = 1;
         }
         final double angRad = Math.toRadians(lightAngle);
         directionalLight.getDirection().x = (float) Math.sin(angRad);

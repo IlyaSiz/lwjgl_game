@@ -118,7 +118,7 @@ public class Window {
         GL.createCapabilities();
 
         // Set the clear color
-        setClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        setClearColour(0.0f, 0.0f, 0.0f, 0.0f);
 
         // Enable depth testing
         glEnable(GL_DEPTH_TEST);
@@ -182,7 +182,7 @@ public class Window {
         glfwDestroyWindow(windowHandle);
     }
 
-    private void setClearColor(final float r, final float g, final float b, final float alpha) {
+    private void setClearColour(final float r, final float g, final float b, final float alpha) {
         glClearColor(r, g, b, alpha);
     }
 }

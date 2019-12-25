@@ -16,11 +16,11 @@ public class Texture {
 
     private final int id;
 
-    public Texture(String fileName) throws Exception {
+    public Texture(final String fileName) throws Exception {
         this(loadTexture(fileName));
     }
 
-    private Texture(int id) {
+    private Texture(final int id) {
         this.id = id;
     }
 
@@ -32,19 +32,19 @@ public class Texture {
         return id;
     }
 
-    private static int loadTexture(String fileName) throws Exception {
+    private static int loadTexture(final String fileName) throws Exception {
         int width;
         int height;
         ByteBuffer buf;
         // Load Texture file
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            IntBuffer w = stack.mallocInt(1);
-            IntBuffer h = stack.mallocInt(1);
-            IntBuffer channels = stack.mallocInt(1);
+        try (final MemoryStack stack = MemoryStack.stackPush()) {
+            final IntBuffer w = stack.mallocInt(1);
+            final IntBuffer h = stack.mallocInt(1);
+            final IntBuffer channels = stack.mallocInt(1);
 
-            URL url = Texture.class.getResource(fileName);
-            File file = Paths.get(url.toURI()).toFile();
-            String filePath = file.getAbsolutePath();
+            final URL url = Texture.class.getResource(fileName);
+            final File file = Paths.get(url.toURI()).toFile();
+            final String filePath = file.getAbsolutePath();
             buf = stbi_load(filePath, w, h, channels, 4);
             if (buf == null) {
                 throw new Exception("Image file [" + filePath + "] not loaded: " + stbi_failure_reason());
@@ -56,7 +56,7 @@ public class Texture {
         }
 
         // Create a new OpenGL texture
-        int textureId = glGenTextures();
+        final int textureId = glGenTextures();
         // Bind the texture
         glBindTexture(GL_TEXTURE_2D, textureId);
 
