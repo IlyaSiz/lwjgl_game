@@ -27,6 +27,8 @@ public class Window {
 
   private boolean vsync;
 
+  private boolean polygonMode;
+
   private boolean resized;
 
   private long windowHandle;
@@ -36,12 +38,14 @@ public class Window {
       @Value("${window.title}") final String title,
       @Value("${window.width}") final int width,
       @Value("${window.height}") final int height,
-      @Value("${window.vsync}") final boolean vsync
+      @Value("${window.vsync}") final boolean vsync,
+      @Value("${rendering.polygonMode}") final boolean polygonMode
   ) {
     this.title = title;
     this.width = width;
     this.height = height;
     this.vsync = vsync;
+    this.polygonMode = polygonMode;
     this.resized = false;
   }
 
@@ -123,8 +127,9 @@ public class Window {
     // Enable depth testing
     glEnable(GL_DEPTH_TEST);
 
-    // uncomment this to show polygons without filling
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (isPolygonMode()) {
+      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
   }
 
   long getWindowHandle() {
@@ -167,6 +172,10 @@ public class Window {
     this.vsync = vsync;
   }
 
+  public void setPolygonMode(final boolean polygonMode) {
+    this.polygonMode = polygonMode;
+  }
+
   void update() {
     // swap the color buffers
     glfwSwapBuffers(windowHandle);
@@ -184,5 +193,9 @@ public class Window {
 
   private void setClearColour(final float r, final float g, final float b, final float alpha) {
     glClearColor(r, g, b, alpha);
+  }
+
+  private boolean isPolygonMode() {
+    return polygonMode;
   }
 }

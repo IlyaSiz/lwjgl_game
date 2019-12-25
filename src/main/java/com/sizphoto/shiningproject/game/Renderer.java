@@ -85,9 +85,9 @@ public class Renderer {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
 
-  void render(final Window window, final Camera camera, final GameItem[] gameItems, final Vector3f ambientLight,
-              final PointLight[] pointLightList, final SpotLight[] spotLightList,
-              final DirectionalLight directionalLight) {
+  void render(final Window window, final Camera camera, final GameItem[] gameItems,
+              final Vector3f ambientLight, final PointLight[] pointLightList,
+              final SpotLight[] spotLightList, final DirectionalLight directionalLight) {
 
     clear();
 
@@ -102,7 +102,9 @@ public class Renderer {
     shaderProgram.bind();
 
     // Update projection Matrix
-    final Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, windowWidth, windowHeight, Z_NEAR, Z_FAR);
+    final Matrix4f projectionMatrix = transformation.getProjectionMatrix(
+        FOV, windowWidth, windowHeight, Z_NEAR, Z_FAR
+    );
     shaderProgram.setUniform(PROJECTION_MATRIX_UNIFORM_NAME, projectionMatrix);
 
     // Update view Matrix
@@ -126,8 +128,9 @@ public class Renderer {
     this.shaderProgram.unbind();
   }
 
-  private void renderLights(final Matrix4f viewMatrix, final Vector3f ambientLight, final PointLight[] pointLightList,
-                            final SpotLight[] spotLightList, final DirectionalLight directionalLight) {
+  private void renderLights(final Matrix4f viewMatrix, final Vector3f ambientLight,
+                            final PointLight[] pointLightList, final SpotLight[] spotLightList,
+                            final DirectionalLight directionalLight) {
 
     shaderProgram.setUniform(AMBIENT_LIGHT_UNIFORM_NAME, ambientLight);
     shaderProgram.setUniform(SPECULAR_POWER_UNIFORM_NAME, specularPower);
@@ -145,7 +148,8 @@ public class Renderer {
     // Process Spot Lights
     numLights = spotLightList != null ? spotLightList.length : 0;
     for (int i = 0; i < numLights; i++) {
-      // Get a copy of the spot light object and transform its position and cone direction to view coordinates
+      // Get a copy of the spot light object and transform its position and cone direction
+      // to view coordinates
       SpotLight currSpotLight = new SpotLight(spotLightList[i]);
       final Vector4f dir = new Vector4f(currSpotLight.getConeDirection(), 0);
       dir.mul(viewMatrix);

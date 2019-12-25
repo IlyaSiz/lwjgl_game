@@ -133,9 +133,9 @@ public final class ObjLoader {
       if (length > 1) {
         // It can be empty if the obj does not define text coords
         final String textCoord = lineTokens[1];
-        idxGroup.idxTextCoord = textCoord.length() > 0 ?
-            Integer.parseInt(textCoord) - 1 :
-            IdxGroup.NO_VALUE;
+        idxGroup.idxTextCoord = textCoord.length() > 0
+            ? Integer.parseInt(textCoord) - 1
+            : IdxGroup.NO_VALUE;
         if (length > 2) {
           idxGroup.idxVecNormal = Integer.parseInt(lineTokens[2]) - 1;
         }
