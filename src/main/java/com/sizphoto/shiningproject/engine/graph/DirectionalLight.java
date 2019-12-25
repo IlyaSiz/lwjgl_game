@@ -4,43 +4,43 @@ import org.joml.Vector3f;
 
 public class DirectionalLight {
 
-    private Vector3f color;
+  private Vector3f colour;
 
-    private Vector3f direction;
+  private Vector3f direction;
 
-    private float intensity;
+  private float intensity;
 
-    public DirectionalLight(Vector3f color, Vector3f direction, float intensity) {
-        this.color = color;
-        this.direction = direction;
-        this.intensity = intensity;
-    }
+  public DirectionalLight(final Vector3f colour, final Vector3f direction, final float intensity) {
+    this.colour = colour;
+    this.direction = direction;
+    this.intensity = intensity;
+  }
 
-    public DirectionalLight(DirectionalLight light) {
-        this(new Vector3f(light.getColor()), new Vector3f(light.getDirection()), light.getIntensity());
-    }
+  public DirectionalLight(final DirectionalLight light) {
+    this(new Vector3f(light.getColour()), new Vector3f(light.getDirection()), light.getIntensity());
+  }
 
-    public Vector3f getColor() {
-        return color;
-    }
+  public Vector3f getColour() {
+    return colour;
+  }
 
-    public void setColor(Vector3f color) {
-        this.color = color;
-    }
+  public void setColour(final Vector3f colour) {
+    this.colour = colour;
+  }
 
-    public Vector3f getDirection() {
-        return direction;
-    }
+  public Vector3f getDirection() {
+    return direction;
+  }
 
-    public void setDirection(Vector3f direction) {
-        this.direction = direction;
-    }
+  public void setDirection(final Vector3f direction) {
+    this.direction = direction;
+  }
 
-    public float getIntensity() {
-        return intensity;
-    }
+  float getIntensity() {
+    return intensity;
+  }
 
-    public void setIntensity(float intensity) {
-        this.intensity = intensity;
-    }
+  public void setIntensity(final float intensity) {
+    this.intensity = intensity;
+  }
 }
