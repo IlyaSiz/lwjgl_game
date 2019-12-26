@@ -145,7 +145,7 @@ public class Mesh {
     glBindTexture(GL_TEXTURE_2D, 0);
   }
 
-  public void render() {
+  void render() {
     initRender();
 
     glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
@@ -153,7 +153,7 @@ public class Mesh {
     endRender();
   }
 
-  public void renderList(final List<GameItem> gameItems, final Consumer<GameItem> consumer) {
+  void renderList(final List<GameItem> gameItems, final Consumer<GameItem> consumer) {
     initRender();
 
     for (GameItem gameItem : gameItems) {
