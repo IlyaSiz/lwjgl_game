@@ -42,7 +42,7 @@ public class Camera {
     position.y += offsetY;
   }
 
-  Vector3f getRotation() {
+  public Vector3f getRotation() {
     return rotation;
   }
 

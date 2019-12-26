@@ -35,6 +35,7 @@ public class Renderer {
   private static final String DIRECTIONAL_LIGHT_UNIFORM_NAME = "directionalLight";
   private static final String PROJ_MODEL_MATRIX_UNIFORM_NAME = "projModelMatrix";
   private static final String COLOUR_UNIFORM_NAME = "colour";
+  private static final String HAS_TEXTURE_UNIFORM_NAME = "hasTexture";
 
   private final Transformation transformation;
 
@@ -95,9 +96,10 @@ public class Renderer {
     this.hudShaderProgram.createFragmentShader(Utils.loadResource(HUD_FRAGMENT_SHADER_FILE_NAME));
     this.hudShaderProgram.link();
 
-    // Create uniforms for Ortographic-model projection matrix and base colour
+    // Create uniforms for Orthographic-model projection matrix and base colour
     this.hudShaderProgram.createUniform(PROJ_MODEL_MATRIX_UNIFORM_NAME);
     this.hudShaderProgram.createUniform(COLOUR_UNIFORM_NAME);
+    this.hudShaderProgram.createUniform(HAS_TEXTURE_UNIFORM_NAME);
   }
 
   private void clear() {
@@ -207,6 +209,7 @@ public class Renderer {
       Matrix4f projModelMatrix = transformation.getOrthoProjModelMatrix(gameItem, ortho);
       hudShaderProgram.setUniform(PROJ_MODEL_MATRIX_UNIFORM_NAME, projModelMatrix);
       hudShaderProgram.setUniform(COLOUR_UNIFORM_NAME, gameItem.getMesh().getMaterial().getAmbientColour());
+      hudShaderProgram.setUniform(HAS_TEXTURE_UNIFORM_NAME, gameItem.getMesh().getMaterial().isTextured() ? 1 : 0);
 
       // Render the mesh for this HUD item
       mesh.render();
