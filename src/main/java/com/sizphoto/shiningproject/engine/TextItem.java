@@ -36,7 +36,7 @@ public class TextItem extends GameItem {
 
     for (int i = 0; i < numChars; i++) {
 
-      FontTexture.CharInfo charInfo = fontTexture.getCharInfo(characters[i]);
+      final FontTexture.CharInfo charInfo = fontTexture.getCharInfo(characters[i]);
 
       // Build a character tile composed by two triangles
 
