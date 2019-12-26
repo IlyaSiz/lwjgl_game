@@ -16,7 +16,7 @@ public class DirectionalLight {
     this.intensity = intensity;
   }
 
-  public DirectionalLight(final DirectionalLight light) {
+  DirectionalLight(final DirectionalLight light) {
     this(new Vector3f(light.getColour()), new Vector3f(light.getDirection()), light.getIntensity());
   }
 
