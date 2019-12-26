@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.lwjgl.opengl.GL20.*;
 
-public class ShaderProgram {
+class ShaderProgram {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ShaderProgram.class);
 
@@ -25,7 +25,7 @@ public class ShaderProgram {
 
   private final Map<String, Integer> uniforms;
 
-  public ShaderProgram() throws Exception {
+  ShaderProgram() throws Exception {
     programId = glCreateProgram();
     if (programId == 0) {
       LOGGER.error("ShaderProgram() - Could not create Shader");
@@ -34,7 +34,7 @@ public class ShaderProgram {
     uniforms = new HashMap<>();
   }
 
-  public void createUniform(final String uniformName) throws Exception {
+  void createUniform(final String uniformName) throws Exception {
     final int uniformLocation = glGetUniformLocation(programId, uniformName);
     if (uniformLocation < 0) {
       final String errorMessage = String.format("Could not find uniform [%s]", uniformName);
@@ -44,8 +44,7 @@ public class ShaderProgram {
     uniforms.put(uniformName, uniformLocation);
   }
 
-  public void createPointLightListUniform(final String uniformName,
-                                          final int size) throws Exception {
+  void createPointLightListUniform(final String uniformName, final int size) throws Exception {
     for (int i = 0; i < size; i++) {
       createPointLightUniform(uniformName + "[" + i + "]");
     }
@@ -60,8 +59,7 @@ public class ShaderProgram {
     createUniform(uniformName + ".att.exponent");
   }
 
-  public void createSpotLightListUniform(final String uniformName,
-                                         final int size) throws Exception {
+  void createSpotLightListUniform(final String uniformName, final int size) throws Exception {
     for (int i = 0; i < size; i++) {
       createSpotLightUniform(uniformName + "[" + i + "]");
     }
@@ -73,13 +71,13 @@ public class ShaderProgram {
     createUniform(uniformName + ".cutoff");
   }
 
-  public void createDirectionalLightUniform(final String uniformName) throws Exception {
+  void createDirectionalLightUniform(final String uniformName) throws Exception {
     createUniform(uniformName + ".colour");
     createUniform(uniformName + ".direction");
     createUniform(uniformName + ".intensity");
   }
 
-  public void createMaterialUniform(final String uniformName) throws Exception {
+  void createMaterialUniform(final String uniformName) throws Exception {
     createUniform(uniformName + ".ambient");
     createUniform(uniformName + ".diffuse");
     createUniform(uniformName + ".specular");
@@ -87,7 +85,7 @@ public class ShaderProgram {
     createUniform(uniformName + ".reflectance");
   }
 
-  public void setUniform(final String uniformName, final Matrix4f value) {
+  void setUniform(final String uniformName, final Matrix4f value) {
     try (final MemoryStack stack = MemoryStack.stackPush()) {
       // Dump the matrix into a float buffer
       final FloatBuffer fb = stack.mallocFloat(16);
@@ -96,30 +94,30 @@ public class ShaderProgram {
     }
   }
 
-  public void setUniform(final String uniformName, final int value) {
+  void setUniform(final String uniformName, final int value) {
     glUniform1i(uniforms.get(uniformName), value);
   }
 
-  public void setUniform(final String uniformName, final float value) {
+  void setUniform(final String uniformName, final float value) {
     glUniform1f(uniforms.get(uniformName), value);
   }
 
-  public void setUniform(final String uniformName, final Vector3f value) {
+  void setUniform(final String uniformName, final Vector3f value) {
     glUniform3f(uniforms.get(uniformName), value.x, value.y, value.z);
   }
 
-  private void setUniform(final String uniformName, final Vector4f value) {
+  void setUniform(final String uniformName, final Vector4f value) {
     glUniform4f(uniforms.get(uniformName), value.x, value.y, value.z, value.w);
   }
 
-  public void setUniform(final String uniformName, final PointLight[] pointLights) {
+  void setUniform(final String uniformName, final PointLight[] pointLights) {
     final int numLights = pointLights != null ? pointLights.length : 0;
     for (int i = 0; i < numLights; i++) {
       setUniform(uniformName, pointLights[i], i);
     }
   }
 
-  public void setUniform(final String uniformName, final PointLight pointLight, final int pos) {
+  void setUniform(final String uniformName, final PointLight pointLight, final int pos) {
     setUniform(uniformName + "[" + pos + "]", pointLight);
   }
 
@@ -133,14 +131,14 @@ public class ShaderProgram {
     setUniform(uniformName + ".att.exponent", att.getExponent());
   }
 
-  public void setUniform(final String uniformName, final SpotLight[] spotLights) {
+  void setUniform(final String uniformName, final SpotLight[] spotLights) {
     final int numLights = spotLights != null ? spotLights.length : 0;
     for (int i = 0; i < numLights; i++) {
       setUniform(uniformName, spotLights[i], i);
     }
   }
 
-  public void setUniform(final String uniformName, final SpotLight spotLight, final int pos) {
+  void setUniform(final String uniformName, final SpotLight spotLight, final int pos) {
     setUniform(uniformName + "[" + pos + "]", spotLight);
   }
 
@@ -150,13 +148,13 @@ public class ShaderProgram {
     setUniform(uniformName + ".cutoff", spotLight.getCutOff());
   }
 
-  public void setUniform(final String uniformName, final DirectionalLight dirLight) {
+  void setUniform(final String uniformName, final DirectionalLight dirLight) {
     setUniform(uniformName + ".colour", dirLight.getColour());
     setUniform(uniformName + ".direction", dirLight.getDirection());
     setUniform(uniformName + ".intensity", dirLight.getIntensity());
   }
 
-  public void setUniform(final String uniformName, final Material material) {
+  void setUniform(final String uniformName, final Material material) {
     setUniform(uniformName + ".ambient", material.getAmbientColour());
     setUniform(uniformName + ".diffuse", material.getDiffuseColour());
     setUniform(uniformName + ".specular", material.getSpecularColour());
@@ -164,11 +162,11 @@ public class ShaderProgram {
     setUniform(uniformName + ".reflectance", material.getReflectance());
   }
 
-  public void createVertexShader(final String shaderCode) throws Exception {
+  void createVertexShader(final String shaderCode) throws Exception {
     vertexShaderId = createShader(shaderCode, GL_VERTEX_SHADER);
   }
 
-  public void createFragmentShader(final String shaderCode) throws Exception {
+  void createFragmentShader(final String shaderCode) throws Exception {
     fragmentShaderId = createShader(shaderCode, GL_FRAGMENT_SHADER);
   }
 
@@ -193,7 +191,7 @@ public class ShaderProgram {
     return shaderId;
   }
 
-  public void link() throws Exception {
+  void link() throws Exception {
     glLinkProgram(programId);
     if (glGetProgrami(programId, GL_LINK_STATUS) == 0) {
       final String programInfoLog = glGetProgramInfoLog(programId, 1024);
@@ -222,15 +220,15 @@ public class ShaderProgram {
 
   }
 
-  public void bind() {
+  void bind() {
     glUseProgram(programId);
   }
 
-  public void unbind() {
+  void unbind() {
     glUseProgram(0);
   }
 
-  public void cleanup() {
+  void cleanup() {
     unbind();
     if (programId != 0) {
       glDeleteProgram(programId);

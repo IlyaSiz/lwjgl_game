@@ -1,6 +1,5 @@
 package com.sizphoto.shiningproject.engine;
 
-import com.sizphoto.shiningproject.game.IGameLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

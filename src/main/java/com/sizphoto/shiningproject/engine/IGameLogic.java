@@ -1,7 +1,4 @@
-package com.sizphoto.shiningproject.game;
-
-import com.sizphoto.shiningproject.engine.MouseInput;
-import com.sizphoto.shiningproject.engine.Window;
+package com.sizphoto.shiningproject.engine;
 
 public interface IGameLogic {
 
