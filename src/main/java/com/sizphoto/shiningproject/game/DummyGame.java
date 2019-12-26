@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 @Component
@@ -58,7 +61,7 @@ public class DummyGame implements IGameLogic {
     mesh.setMaterial(material);
 
     float blockScale = 0.5f;
-    float skyBoxScale = 10.0f;
+    float skyBoxScale = 50.0f;
     float extension = 2.0f;
 
     float startX = extension * (-skyBoxScale + blockScale);
@@ -197,9 +200,9 @@ public class DummyGame implements IGameLogic {
   @Override
   public void cleanup() {
     this.renderer.cleanup();
-    final GameItem[] gameItems = scene.getGameItems();
-    for (GameItem gameItem : gameItems) {
-      gameItem.getMesh().cleanUp();
+    final Map<Mesh, List<GameItem>> mapMeshes = scene.getGameMeshes();
+    for (Mesh mesh : mapMeshes.keySet()) {
+      mesh.cleanUp();
     }
     hud.cleanup();
   }
