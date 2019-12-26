@@ -19,7 +19,7 @@ public class SceneLight {
     return ambientLight;
   }
 
-  public void setAmbientLight(Vector3f ambientLight) {
+  public void setAmbientLight(final Vector3f ambientLight) {
     this.ambientLight = ambientLight;
   }
 
@@ -27,7 +27,7 @@ public class SceneLight {
     return pointLightList;
   }
 
-  public void setPointLightList(PointLight[] pointLightList) {
+  public void setPointLightList(final PointLight[] pointLightList) {
     this.pointLightList = pointLightList;
   }
 
@@ -35,7 +35,7 @@ public class SceneLight {
     return spotLightList;
   }
 
-  public void setSpotLightList(SpotLight[] spotLightList) {
+  public void setSpotLightList(final SpotLight[] spotLightList) {
     this.spotLightList = spotLightList;
   }
 
@@ -43,7 +43,7 @@ public class SceneLight {
     return directionalLight;
   }
 
-  public void setDirectionalLight(DirectionalLight directionalLight) {
+  public void setDirectionalLight(final DirectionalLight directionalLight) {
     this.directionalLight = directionalLight;
   }
 

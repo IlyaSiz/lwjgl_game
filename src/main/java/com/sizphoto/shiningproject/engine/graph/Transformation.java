@@ -67,7 +67,7 @@ public class Transformation {
     return orthoMatrix;
   }
 
-  Matrix4f getOrtoProjModelMatrix(final GameItem gameItem, final Matrix4f orthoMatrix) {
+  Matrix4f getOrthoProjModelMatrix(final GameItem gameItem, final Matrix4f orthoMatrix) {
     final Vector3f rotation = gameItem.getRotation();
     Matrix4f modelMatrix = new Matrix4f();
     modelMatrix.identity().translate(gameItem.getPosition())

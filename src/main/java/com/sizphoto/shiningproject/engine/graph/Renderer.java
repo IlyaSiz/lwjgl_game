@@ -203,8 +203,8 @@ public class Renderer {
     Matrix4f ortho = transformation.getOrthoProjectionMatrix(0, window.getWidth(), window.getHeight(), 0);
     for (GameItem gameItem : hud.getGameItems()) {
       Mesh mesh = gameItem.getMesh();
-      // Set ortohtaphic and model matrix for this HUD item
-      Matrix4f projModelMatrix = transformation.getOrtoProjModelMatrix(gameItem, ortho);
+      // Set orthographic and model matrix for this HUD item
+      Matrix4f projModelMatrix = transformation.getOrthoProjModelMatrix(gameItem, ortho);
       hudShaderProgram.setUniform(PROJ_MODEL_MATRIX_UNIFORM_NAME, projModelMatrix);
       hudShaderProgram.setUniform(COLOUR_UNIFORM_NAME, gameItem.getMesh().getMaterial().getAmbientColour());
 

@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 public class Utils {
 
+  private Utils() {
+  }
+
   public static String loadResource(final String fileName) throws Exception {
     String result;
     try (

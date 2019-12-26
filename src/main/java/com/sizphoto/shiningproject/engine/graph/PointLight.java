@@ -25,7 +25,7 @@ public class PointLight {
     this.attenuation = attenuation;
   }
 
-  public PointLight(final PointLight pointLight) {
+  PointLight(final PointLight pointLight) {
     this(new Vector3f(pointLight.getColour()), new Vector3f(pointLight.getPosition()),
         pointLight.getIntensity(), pointLight.getAttenuation());
   }
