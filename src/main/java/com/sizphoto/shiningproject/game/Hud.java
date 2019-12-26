@@ -55,7 +55,7 @@ public class Hud implements IHud {
     this.statusTextItem.setText(statusText);
   }
 
-  public void rotateCompass(final float angle) {
+  void rotateCompass(final float angle) {
     this.compassItem.setRotation(0, 0, 180 + angle);
   }
 

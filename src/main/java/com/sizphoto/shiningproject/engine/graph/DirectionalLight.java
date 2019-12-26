@@ -32,7 +32,7 @@ public class DirectionalLight {
     return direction;
   }
 
-  public void setDirection(final Vector3f direction) {
+  void setDirection(final Vector3f direction) {
     this.direction = direction;
   }
 

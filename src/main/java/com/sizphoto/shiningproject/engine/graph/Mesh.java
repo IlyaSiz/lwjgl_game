@@ -2,11 +2,13 @@ package com.sizphoto.shiningproject.engine.graph;
 
 import java.nio.FloatBuffer;
 
+import com.sizphoto.shiningproject.engine.GameItem;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.lwjgl.opengl.GL30.*;
 
@@ -117,7 +119,7 @@ public class Mesh {
     this.material = material;
   }
 
-  public void render() {
+  private void initRender() {
     final Texture texture = material.getTexture();
     if (texture != null) {
       // Activate firs texture bank
@@ -131,15 +133,37 @@ public class Mesh {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
+  }
 
-    glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
-
+  private void endRender() {
     // Restore state
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindVertexArray(0);
+
     glBindTexture(GL_TEXTURE_2D, 0);
+  }
+
+  void render() {
+    initRender();
+
+    glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+
+    endRender();
+  }
+
+  void renderList(final List<GameItem> gameItems, final Consumer<GameItem> consumer) {
+    initRender();
+
+    for (GameItem gameItem : gameItems) {
+      // Set up data required by gameItem
+      consumer.accept(gameItem);
+      // Render this game item
+      glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+    }
+
+    endRender();
   }
 
   public void cleanUp() {
