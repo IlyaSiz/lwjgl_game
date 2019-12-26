@@ -20,7 +20,7 @@ public class Mesh {
 
   private Material material;
 
-  Mesh(
+  public Mesh(
       final float[] positions,
       final float[] textCoords,
       final float[] normals,
@@ -70,7 +70,12 @@ public class Mesh {
       vboId = glGenBuffers();
       vboIdList.add(vboId);
       vecNormalsBuffer = MemoryUtil.memAllocFloat(normals.length);
-      vecNormalsBuffer.put(normals).flip();
+      if (vecNormalsBuffer.capacity() > 0) {
+        vecNormalsBuffer.put(normals).flip();
+      } else {
+        // Create empty structure
+        vecNormalsBuffer = MemoryUtil.memAllocFloat(positions.length);
+      }
       glBindBuffer(GL_ARRAY_BUFFER, vboId);
       glBufferData(GL_ARRAY_BUFFER, vecNormalsBuffer, GL_STATIC_DRAW);
       glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, 0);
@@ -150,6 +155,20 @@ public class Mesh {
     final Texture texture = material.getTexture();
     if (texture != null) {
       texture.cleanup();
+    }
+
+    // Delete the VAO
+    glBindVertexArray(0);
+    glDeleteVertexArrays(vaoId);
+  }
+
+  public void deleteBuffers() {
+    glDisableVertexAttribArray(0);
+
+    // Delete the VBOs
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    for (int vboId : vboIdList) {
+      glDeleteBuffers(vboId);
     }
 
     // Delete the VAO

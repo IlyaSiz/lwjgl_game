@@ -86,7 +86,7 @@ public class Material {
     return this.texture != null;
   }
 
-  Texture getTexture() {
+  public Texture getTexture() {
     return texture;
   }
 

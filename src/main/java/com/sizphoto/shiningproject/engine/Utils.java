@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 public class Utils {
 
+  private Utils() {
+  }
+
   public static String loadResource(final String fileName) throws Exception {
     String result;
     try (
@@ -33,5 +36,14 @@ public class Utils {
       }
     }
     return list;
+  }
+
+  static float[] listToArray(final List<Float> list) {
+    final int size = list != null ? list.size() : 0;
+    float[] floatArr = new float[size];
+    for (int i = 0; i < size; i++) {
+      floatArr[i] = list.get(i);
+    }
+    return floatArr;
   }
 }

@@ -1,6 +1,5 @@
 package com.sizphoto.shiningproject.engine;
 
-import com.sizphoto.shiningproject.game.IGameLogic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,30 +37,30 @@ public class GameEngine implements Runnable {
     final String osName = System.getProperty("os.name");
     LOGGER.info("start() - Starting on {} operating system", osName);
     if (osName.contains("Mac")) {
-      this.gameLoopThread.run();
+      gameLoopThread.run();
     } else {
-      this.gameLoopThread.start();
+      gameLoopThread.start();
     }
   }
 
   @Override
   public void run() {
     try {
-      this.init();
-      this.gameLoop();
+      init();
+      gameLoop();
     } catch (final Exception exception) {
       LOGGER.error("run() - Game engine run failed: {}", exception.getMessage());
       exception.printStackTrace();
     } finally {
-      this.cleanup();
+      cleanup();
     }
   }
 
   private void init() throws Exception {
-    this.window.init();
-    this.timer.init();
-    this.mouseInput.init(window);
-    this.gameLogic.init(window);
+    window.init();
+    timer.init();
+    mouseInput.init(window);
+    gameLogic.init(window);
   }
 
   private void gameLoop() {
@@ -70,19 +69,19 @@ public class GameEngine implements Runnable {
     final float interval = 1f / TARGET_UPS;
 
     while (!this.window.windowShouldClose()) {
-      elapsedTime = this.timer.getElapsedTime();
+      elapsedTime = timer.getElapsedTime();
       accumulator += elapsedTime;
 
-      this.input();
+      input();
 
       while (accumulator >= interval) {
         update(interval);
         accumulator -= interval;
       }
 
-      this.render();
+      render();
 
-      if (!this.window.isVsync()) {
+      if (!window.isVsync()) {
         sync();
       }
     }
@@ -90,8 +89,8 @@ public class GameEngine implements Runnable {
 
   private void sync() {
     final float loopSlot = 1f / TARGET_FPS;
-    final double endTime = this.timer.getLastLoopTime() + loopSlot;
-    while (this.timer.getTime() < endTime) {
+    final double endTime = timer.getLastLoopTime() + loopSlot;
+    while (timer.getTime() < endTime) {
       try {
         Thread.sleep(1);
       } catch (final InterruptedException ie) {
@@ -110,12 +109,12 @@ public class GameEngine implements Runnable {
   }
 
   private void cleanup() {
-    this.window.release();
-    this.gameLogic.cleanup();
+    window.release();
+    gameLogic.cleanup();
   }
 
   private void render() {
-    this.gameLogic.render(this.window);
-    this.window.update();
+    gameLogic.render(this.window);
+    window.update();
   }
 }
