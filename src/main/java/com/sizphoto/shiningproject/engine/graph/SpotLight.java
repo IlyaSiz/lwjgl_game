@@ -10,7 +10,7 @@ public class SpotLight {
 
   private float cutOff;
 
-  public SpotLight(
+  private SpotLight(
       final PointLight pointLight,
       final Vector3f coneDirection,
       final float cutOffAngle
@@ -20,14 +20,14 @@ public class SpotLight {
     setCutOffAngle(cutOffAngle);
   }
 
-  public SpotLight(final SpotLight spotLight) {
+  SpotLight(final SpotLight spotLight) {
     this(new PointLight(spotLight.getPointLight()),
         new Vector3f(spotLight.getConeDirection()),
         0);
     setCutOff(spotLight.getCutOff());
   }
 
-  public PointLight getPointLight() {
+  PointLight getPointLight() {
     return pointLight;
   }
 
@@ -35,11 +35,11 @@ public class SpotLight {
     this.pointLight = pointLight;
   }
 
-  public Vector3f getConeDirection() {
+  Vector3f getConeDirection() {
     return coneDirection;
   }
 
-  public void setConeDirection(final Vector3f coneDirection) {
+  void setConeDirection(final Vector3f coneDirection) {
     this.coneDirection = coneDirection;
   }
 
