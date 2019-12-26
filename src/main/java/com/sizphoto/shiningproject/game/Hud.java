@@ -4,18 +4,19 @@ import com.sizphoto.shiningproject.engine.GameItem;
 import com.sizphoto.shiningproject.engine.IHud;
 import com.sizphoto.shiningproject.engine.TextItem;
 import com.sizphoto.shiningproject.engine.Window;
+import com.sizphoto.shiningproject.engine.graph.FontTexture;
 import com.sizphoto.shiningproject.engine.graph.Material;
 import com.sizphoto.shiningproject.engine.graph.Mesh;
 import com.sizphoto.shiningproject.engine.graph.ObjLoader;
 import org.joml.Vector4f;
 
+import java.awt.*;
+
 public class Hud implements IHud {
 
-  private static final int FONT_COLS = 16;
+  private static final Font FONT = new Font("Helvetica", Font.PLAIN, 20);
 
-  private static final int FONT_ROWS = 16;
-
-  private static final String FONT_TEXTURE = "/textures/font_texture.png";
+  private static final String CHARSET = "CP1251";
 
   private static final String COMPASS_MESH = "/models/compass.obj";
 
@@ -26,7 +27,8 @@ public class Hud implements IHud {
   private final GameItem compassItem;
 
   Hud(final String statusText) throws Exception {
-    this.statusTextItem = new TextItem(statusText, FONT_TEXTURE, FONT_COLS, FONT_ROWS);
+    FontTexture fontTexture = new FontTexture(FONT, CHARSET);
+    this.statusTextItem = new TextItem(statusText, fontTexture);
     this.statusTextItem.getMesh().getMaterial()
         .setAmbientColour(new Vector4f(1, 1, 1, 1));
 
