@@ -1,4 +1,4 @@
-package com.sizphoto.shiningproject.engine;
+package com.sizphoto.shiningproject.engine.items;
 
 import com.sizphoto.shiningproject.engine.graph.Mesh;
 import org.joml.Vector3f;

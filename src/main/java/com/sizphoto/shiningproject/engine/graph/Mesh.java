@@ -2,7 +2,7 @@ package com.sizphoto.shiningproject.engine.graph;
 
 import java.nio.FloatBuffer;
 
-import com.sizphoto.shiningproject.engine.GameItem;
+import com.sizphoto.shiningproject.engine.items.GameItem;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.IntBuffer;

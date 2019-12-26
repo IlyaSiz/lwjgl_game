@@ -2,6 +2,9 @@ package com.sizphoto.shiningproject.game;
 
 import com.sizphoto.shiningproject.engine.*;
 import com.sizphoto.shiningproject.engine.graph.*;
+import com.sizphoto.shiningproject.engine.graph.lights.DirectionalLight;
+import com.sizphoto.shiningproject.engine.items.GameItem;
+import com.sizphoto.shiningproject.engine.items.SkyBox;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.springframework.beans.factory.annotation.Autowired;

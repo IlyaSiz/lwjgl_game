@@ -1,8 +1,8 @@
 package com.sizphoto.shiningproject.game;
 
-import com.sizphoto.shiningproject.engine.GameItem;
+import com.sizphoto.shiningproject.engine.items.GameItem;
 import com.sizphoto.shiningproject.engine.IHud;
-import com.sizphoto.shiningproject.engine.TextItem;
+import com.sizphoto.shiningproject.engine.items.TextItem;
 import com.sizphoto.shiningproject.engine.Window;
 import com.sizphoto.shiningproject.engine.graph.FontTexture;
 import com.sizphoto.shiningproject.engine.graph.Material;

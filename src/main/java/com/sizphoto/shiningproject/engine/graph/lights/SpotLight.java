@@ -1,4 +1,4 @@
-package com.sizphoto.shiningproject.engine.graph;
+package com.sizphoto.shiningproject.engine.graph.lights;
 
 import org.joml.Vector3f;
 
@@ -20,14 +20,14 @@ public class SpotLight {
     setCutOffAngle(cutOffAngle);
   }
 
-  SpotLight(final SpotLight spotLight) {
+  public SpotLight(final SpotLight spotLight) {
     this(new PointLight(spotLight.getPointLight()),
         new Vector3f(spotLight.getConeDirection()),
         0);
     setCutOff(spotLight.getCutOff());
   }
 
-  PointLight getPointLight() {
+  public PointLight getPointLight() {
     return pointLight;
   }
 
@@ -35,15 +35,15 @@ public class SpotLight {
     this.pointLight = pointLight;
   }
 
-  Vector3f getConeDirection() {
+  public Vector3f getConeDirection() {
     return coneDirection;
   }
 
-  void setConeDirection(final Vector3f coneDirection) {
+  public void setConeDirection(final Vector3f coneDirection) {
     this.coneDirection = coneDirection;
   }
 
-  float getCutOff() {
+  public float getCutOff() {
     return cutOff;
   }
 

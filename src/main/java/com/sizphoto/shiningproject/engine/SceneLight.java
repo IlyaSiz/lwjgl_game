@@ -1,8 +1,8 @@
 package com.sizphoto.shiningproject.engine;
 
-import com.sizphoto.shiningproject.engine.graph.DirectionalLight;
-import com.sizphoto.shiningproject.engine.graph.PointLight;
-import com.sizphoto.shiningproject.engine.graph.SpotLight;
+import com.sizphoto.shiningproject.engine.graph.lights.DirectionalLight;
+import com.sizphoto.shiningproject.engine.graph.lights.PointLight;
+import com.sizphoto.shiningproject.engine.graph.lights.SpotLight;
 import org.joml.Vector3f;
 
 public class SceneLight {
