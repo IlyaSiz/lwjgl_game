@@ -29,7 +29,7 @@ public class SpringBootStandaloneApplication implements CommandLineRunner {
   @Override
   public void run(final String... args) {
     try {
-      gameEngine.start();
+      gameEngine.run();
     } catch (final Exception exception) {
       LOGGER.error("run() - Failed to run application");
       // System.exit(-1);

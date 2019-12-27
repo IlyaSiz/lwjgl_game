@@ -25,7 +25,6 @@
         <built.by>IlyaSiz</built.by>
         <main.class>com.sizphoto.shiningproject.SpringBootStandaloneApplication</main.class>
         <!-- Versions -->
-        <java.version>8</java.version>
         <mvn.complilerplug.version>3.8.1</mvn.complilerplug.version>
         <mvn.jarplug.version>3.1.2</mvn.jarplug.version>
         <mvn.resplug.version>3.1.0</mvn.resplug.version>
@@ -202,9 +201,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.12.0</version>
-                <configuration>
-                    <targetJdk>1.8</targetJdk>
-                </configuration>
             </plugin>
         </plugins>
     </reporting>

@@ -21,26 +21,13 @@ public class GameEngine implements Runnable {
 
   private final MouseInput mouseInput;
 
-  private final Thread gameLoopThread;
-
   @Autowired
   public GameEngine(final Window window, final Timer timer, final IGameLogic gameLogic,
                     final MouseInput mouseInput) {
-    gameLoopThread = new Thread(this, "GAME_LOOP_THREAD");
     this.window = window;
     this.timer = timer;
     this.gameLogic = gameLogic;
     this.mouseInput = mouseInput;
-  }
-
-  public void start() {
-    final String osName = System.getProperty("os.name");
-    LOGGER.info("start() - Starting on {} operating system", osName);
-    if (osName.contains("Mac")) {
-      gameLoopThread.run();
-    } else {
-      gameLoopThread.start();
-    }
   }
 
   @Override
