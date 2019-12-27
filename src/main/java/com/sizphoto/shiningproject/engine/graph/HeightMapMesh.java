@@ -3,12 +3,11 @@ package com.sizphoto.shiningproject.engine.graph;
 import com.sizphoto.shiningproject.engine.Utils;
 import org.joml.Vector3f;
 import org.lwjgl.system.MemoryStack;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,13 +40,13 @@ public class HeightMapMesh {
     ByteBuffer buf;
     int width;
     int height;
-    try (final MemoryStack stack = MemoryStack.stackPush()) {
+    try (MemoryStack stack = MemoryStack.stackPush()) {
       final IntBuffer w = stack.mallocInt(1);
       final IntBuffer h = stack.mallocInt(1);
       final IntBuffer channels = stack.mallocInt(1);
 
-      final URL url = Texture.class.getResource(heightMapFile);
-      final File file = Paths.get(url.toURI()).toFile();
+      final String fileLocation = String.format("file:%s", heightMapFile);
+      final File file = ResourceUtils.getFile(fileLocation);
       final String filePath = file.getAbsolutePath();
 
       buf = stbi_load(filePath, w, h, channels, 4);

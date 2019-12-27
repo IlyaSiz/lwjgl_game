@@ -18,7 +18,7 @@ public class Hud implements IHud {
 
   private static final String CHARSET = "CP1251";
 
-  private static final String COMPASS_MESH = "/models/compass.obj";
+  private static final String COMPASS_MESH = "models/compass.obj";
 
   private final GameItem[] gameItems;
 

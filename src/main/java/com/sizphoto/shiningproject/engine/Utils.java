@@ -1,6 +1,9 @@
 package com.sizphoto.shiningproject.engine;
 
+import org.springframework.util.ResourceUtils;
+
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -15,8 +18,8 @@ public class Utils {
   public static String loadResource(final String fileName) throws Exception {
     String result;
     try (
-        final InputStream in = Class.forName(Utils.class.getName()).getResourceAsStream(fileName);
-        final Scanner scanner = new Scanner(in, "UTF-8")
+        InputStream in = Class.forName(Utils.class.getName()).getResourceAsStream(fileName);
+        Scanner scanner = new Scanner(in, "UTF-8")
     ) {
       result = scanner.useDelimiter("\\A").next();
     }
@@ -26,9 +29,9 @@ public class Utils {
   public static List<String> readAllLines(final String fileName) throws Exception {
     List<String> list = new ArrayList<>();
     try (
-        final InputStream in = Class.forName(Utils.class.getName()).getResourceAsStream(fileName);
-        final InputStreamReader isr = new InputStreamReader(in);
-        final BufferedReader br = new BufferedReader(isr)
+        InputStream in = new FileInputStream(ResourceUtils.getFile(String.format("file:%s", fileName)));
+        InputStreamReader isr = new InputStreamReader(in);
+        BufferedReader br = new BufferedReader(isr)
     ) {
       String line;
       while ((line = br.readLine()) != null) {
