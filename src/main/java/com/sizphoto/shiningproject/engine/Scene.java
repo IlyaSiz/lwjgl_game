@@ -1,6 +1,8 @@
 package com.sizphoto.shiningproject.engine;
 
 import com.sizphoto.shiningproject.engine.graph.Mesh;
+import com.sizphoto.shiningproject.engine.items.GameItem;
+import com.sizphoto.shiningproject.engine.items.SkyBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;

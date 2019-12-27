@@ -38,7 +38,7 @@ public class Utils {
     return list;
   }
 
-  static float[] listToArray(final List<Float> list) {
+  public static float[] listToArray(final List<Float> list) {
     final int size = list != null ? list.size() : 0;
     float[] floatArr = new float[size];
     for (int i = 0; i < size; i++) {

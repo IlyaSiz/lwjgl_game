@@ -1,13 +1,15 @@
 package com.sizphoto.shiningproject.engine;
 
-import com.sizphoto.shiningproject.engine.graph.DirectionalLight;
-import com.sizphoto.shiningproject.engine.graph.PointLight;
-import com.sizphoto.shiningproject.engine.graph.SpotLight;
+import com.sizphoto.shiningproject.engine.graph.lights.DirectionalLight;
+import com.sizphoto.shiningproject.engine.graph.lights.PointLight;
+import com.sizphoto.shiningproject.engine.graph.lights.SpotLight;
 import org.joml.Vector3f;
 
 public class SceneLight {
 
   private Vector3f ambientLight;
+
+  private Vector3f skyBoxLight;
 
   private PointLight[] pointLightList;
 
@@ -47,4 +49,11 @@ public class SceneLight {
     this.directionalLight = directionalLight;
   }
 
+  public Vector3f getSkyBoxLight() {
+    return skyBoxLight;
+  }
+
+  public void setSkyBoxLight(final Vector3f skyBoxLight) {
+    this.skyBoxLight = skyBoxLight;
+  }
 }

@@ -1,6 +1,11 @@
 package com.sizphoto.shiningproject.engine.graph;
 
 import com.sizphoto.shiningproject.engine.*;
+import com.sizphoto.shiningproject.engine.graph.lights.DirectionalLight;
+import com.sizphoto.shiningproject.engine.graph.lights.PointLight;
+import com.sizphoto.shiningproject.engine.graph.lights.SpotLight;
+import com.sizphoto.shiningproject.engine.items.GameItem;
+import com.sizphoto.shiningproject.engine.items.SkyBox;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -165,7 +170,7 @@ public class Renderer {
     viewMatrix.m32(0);
     Matrix4f modelViewMatrix = transformation.buildModelViewMatrix(skyBox, viewMatrix);
     skyBoxShaderProgram.setUniform(MODEL_VIEW_MATRIX_UNIFORM_NAME, modelViewMatrix);
-    skyBoxShaderProgram.setUniform(AMBIENT_LIGHT_UNIFORM_NAME, scene.getSceneLight().getAmbientLight());
+    skyBoxShaderProgram.setUniform(AMBIENT_LIGHT_UNIFORM_NAME, scene.getSceneLight().getSkyBoxLight());
 
     scene.getSkyBox().getMesh().render();
 

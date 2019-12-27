@@ -1,4 +1,4 @@
-package com.sizphoto.shiningproject.engine.graph;
+package com.sizphoto.shiningproject.engine.graph.lights;
 
 import org.joml.Vector3f;
 
@@ -16,7 +16,7 @@ public class DirectionalLight {
     this.intensity = intensity;
   }
 
-  DirectionalLight(final DirectionalLight light) {
+  public DirectionalLight(final DirectionalLight light) {
     this(new Vector3f(light.getColour()), new Vector3f(light.getDirection()), light.getIntensity());
   }
 
@@ -32,11 +32,11 @@ public class DirectionalLight {
     return direction;
   }
 
-  void setDirection(final Vector3f direction) {
+  public void setDirection(final Vector3f direction) {
     this.direction = direction;
   }
 
-  float getIntensity() {
+  public float getIntensity() {
     return intensity;
   }
 

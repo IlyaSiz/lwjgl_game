@@ -1,4 +1,4 @@
-package com.sizphoto.shiningproject.engine.graph;
+package com.sizphoto.shiningproject.engine.graph.lights;
 
 import org.joml.Vector3f;
 
@@ -25,12 +25,12 @@ public class PointLight {
     this.attenuation = attenuation;
   }
 
-  PointLight(final PointLight pointLight) {
+  public PointLight(final PointLight pointLight) {
     this(new Vector3f(pointLight.getColour()), new Vector3f(pointLight.getPosition()),
         pointLight.getIntensity(), pointLight.getAttenuation());
   }
 
-  Vector3f getColour() {
+  public Vector3f getColour() {
     return colour;
   }
 
@@ -46,7 +46,7 @@ public class PointLight {
     this.position = position;
   }
 
-  float getIntensity() {
+  public float getIntensity() {
     return intensity;
   }
 
@@ -54,7 +54,7 @@ public class PointLight {
     this.intensity = intensity;
   }
 
-  Attenuation getAttenuation() {
+  public Attenuation getAttenuation() {
     return attenuation;
   }
 
@@ -76,7 +76,7 @@ public class PointLight {
       this.exponent = exponent;
     }
 
-    float getConstant() {
+    public float getConstant() {
       return constant;
     }
 
@@ -84,7 +84,7 @@ public class PointLight {
       this.constant = constant;
     }
 
-    float getLinear() {
+    public float getLinear() {
       return linear;
     }
 
@@ -92,7 +92,7 @@ public class PointLight {
       this.linear = linear;
     }
 
-    float getExponent() {
+    public float getExponent() {
       return exponent;
     }
 
