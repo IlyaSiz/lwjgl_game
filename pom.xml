@@ -22,7 +22,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <lwjgl.version>3.2.2</lwjgl.version>
+        <!-- Versions -->
+        <java.version>8</java.version>
+        <mvn.complilerplug.version>3.8.1</mvn.complilerplug.version>
+        <lwjgl.version>3.2.3</lwjgl.version>
         <joml.version>1.9.16</joml.version>
     </properties>
 
@@ -201,6 +204,15 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${mvn.complilerplug.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
