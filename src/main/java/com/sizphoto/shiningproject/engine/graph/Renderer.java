@@ -143,14 +143,14 @@ public class Renderer {
     transformation.updateProjectionMatrix(FOV, windowWidth, windowHeight, Z_NEAR, Z_FAR);
     transformation.updateViewMatrix(camera);
 
-    renderScene(window, camera, scene);
+    renderScene(scene);
 
-    renderSkyBox(window, camera, scene);
+    renderSkyBox(scene);
 
     renderHud(window, hud);
   }
 
-  private void renderSkyBox(final Window window, final Camera camera, final Scene scene) {
+  private void renderSkyBox(final Scene scene) {
     skyBoxShaderProgram.bind();
 
     skyBoxShaderProgram.setUniform(TEXTURE_SAMPLER_UNIFORM_NAME, 0);
@@ -177,7 +177,7 @@ public class Renderer {
     skyBoxShaderProgram.unbind();
   }
 
-  private void renderScene(final Window window, final Camera camera, final Scene scene) {
+  private void renderScene(final Scene scene) {
 
     sceneShaderProgram.bind();
 

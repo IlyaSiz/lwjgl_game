@@ -78,8 +78,8 @@ public class DummyGame implements IGameLogic {
         terrainScale,
         minY,
         maxY,
-        "/textures/heightmap.png",
-        "/textures/terrain.png",
+        "textures/heightmap.png",
+        "textures/terrain.png",
         textInc);
     scene.setGameItems(terrain.getGameItems());
 
@@ -110,7 +110,7 @@ public class DummyGame implements IGameLogic {
 //    scene.setGameItems(gameItems);
 
     // Setup SkyBox
-    SkyBox skyBox = new SkyBox("/models/skybox.obj", "/textures/skybox.png");
+    SkyBox skyBox = new SkyBox("models/skybox.obj", "textures/skybox.png");
     skyBox.setScale(skyBoxScale);
     scene.setSkyBox(skyBox);
 

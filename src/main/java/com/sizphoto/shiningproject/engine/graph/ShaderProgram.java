@@ -89,7 +89,7 @@ class ShaderProgram {
   }
 
   void setUniform(final String uniformName, final Matrix4f value) {
-    try (final MemoryStack stack = MemoryStack.stackPush()) {
+    try (MemoryStack stack = MemoryStack.stackPush()) {
       // Dump the matrix into a float buffer
       final FloatBuffer fb = stack.mallocFloat(16);
       value.get(fb);

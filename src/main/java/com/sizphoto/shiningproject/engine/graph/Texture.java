@@ -1,12 +1,11 @@
 package com.sizphoto.shiningproject.engine.graph;
 
 import java.io.File;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.nio.file.Paths;
 
 import org.lwjgl.system.MemoryStack;
+import org.springframework.util.ResourceUtils;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
@@ -25,13 +24,13 @@ public class Texture {
     ByteBuffer buf;
 
     // Load Texture file
-    try (final MemoryStack stack = MemoryStack.stackPush()) {
+    try (MemoryStack stack = MemoryStack.stackPush()) {
       final IntBuffer w = stack.mallocInt(1);
       final IntBuffer h = stack.mallocInt(1);
       final IntBuffer channels = stack.mallocInt(1);
 
-      final URL url = Texture.class.getResource(fileName);
-      final File file = Paths.get(url.toURI()).toFile();
+      final String fileLocation = String.format("file:%s", fileName);
+      final File file = ResourceUtils.getFile(fileLocation);
       final String filePath = file.getAbsolutePath();
 
       buf = stbi_load(filePath, w, h, channels, 4);
@@ -54,7 +53,7 @@ public class Texture {
     ByteBuffer buf;
 
     // Load Texture file
-    try (final MemoryStack stack = MemoryStack.stackPush()) {
+    try (MemoryStack stack = MemoryStack.stackPush()) {
       final IntBuffer w = stack.mallocInt(1);
       final IntBuffer h = stack.mallocInt(1);
       final IntBuffer channels = stack.mallocInt(1);
