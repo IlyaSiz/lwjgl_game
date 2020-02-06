@@ -13,106 +13,106 @@ import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
 
-  private final int id;
+    private final int id;
 
-  private final int width;
+    private final int width;
 
-  private final int height;
+    private final int height;
 
-  public Texture(final String fileName) throws Exception {
+    public Texture(final String fileName) throws Exception {
 
-    ByteBuffer buf;
+        ByteBuffer buf;
 
-    // Load Texture file
-    try (MemoryStack stack = MemoryStack.stackPush()) {
-      final IntBuffer w = stack.mallocInt(1);
-      final IntBuffer h = stack.mallocInt(1);
-      final IntBuffer channels = stack.mallocInt(1);
+        // Load Texture file
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            final IntBuffer w = stack.mallocInt(1);
+            final IntBuffer h = stack.mallocInt(1);
+            final IntBuffer channels = stack.mallocInt(1);
 
-      final String fileLocation = String.format("file:%s", fileName);
-      final File file = ResourceUtils.getFile(fileLocation);
-      final String filePath = file.getAbsolutePath();
+            final String fileLocation = String.format("file:%s", fileName);
+            final File file = ResourceUtils.getFile(fileLocation);
+            final String filePath = file.getAbsolutePath();
 
-      buf = stbi_load(filePath, w, h, channels, 4);
-      if (buf == null) {
-        throw new Exception("Image file [" + filePath + "] not loaded: " + stbi_failure_reason());
-      }
+            buf = stbi_load(filePath, w, h, channels, 4);
+            if (buf == null) {
+                throw new Exception("Image file [" + filePath + "] not loaded: " + stbi_failure_reason());
+            }
 
-      /* Set width and height of image */
-      this.width = w.get();
-      this.height = h.get();
+            /* Set width and height of image */
+            this.width = w.get();
+            this.height = h.get();
+        }
+
+        this.id = createTexture(buf);
+
+        stbi_image_free(buf);
     }
 
-    this.id = createTexture(buf);
+    Texture(final ByteBuffer imageBuffer) throws Exception {
 
-    stbi_image_free(buf);
-  }
+        ByteBuffer buf;
 
-  Texture(final ByteBuffer imageBuffer) throws Exception {
+        // Load Texture file
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            final IntBuffer w = stack.mallocInt(1);
+            final IntBuffer h = stack.mallocInt(1);
+            final IntBuffer channels = stack.mallocInt(1);
 
-    ByteBuffer buf;
+            buf = stbi_load_from_memory(imageBuffer, w, h, channels, 4);
+            if (buf == null) {
+                throw new Exception("Image file not loaded: " + stbi_failure_reason());
+            }
 
-    // Load Texture file
-    try (MemoryStack stack = MemoryStack.stackPush()) {
-      final IntBuffer w = stack.mallocInt(1);
-      final IntBuffer h = stack.mallocInt(1);
-      final IntBuffer channels = stack.mallocInt(1);
+            this.width = w.get();
+            this.height = h.get();
+        }
 
-      buf = stbi_load_from_memory(imageBuffer, w, h, channels, 4);
-      if (buf == null) {
-        throw new Exception("Image file not loaded: " + stbi_failure_reason());
-      }
+        this.id = createTexture(buf);
 
-      this.width = w.get();
-      this.height = h.get();
+        stbi_image_free(buf);
     }
 
-    this.id = createTexture(buf);
+    public void bind() {
+        glBindTexture(GL_TEXTURE_2D, id);
+    }
 
-    stbi_image_free(buf);
-  }
+    void cleanup() {
+        glDeleteTextures(id);
+    }
 
-  public void bind() {
-    glBindTexture(GL_TEXTURE_2D, id);
-  }
+    public int getWidth() {
+        return this.width;
+    }
 
-  void cleanup() {
-    glDeleteTextures(id);
-  }
+    public int getHeight() {
+        return this.height;
+    }
 
-  public int getWidth() {
-    return this.width;
-  }
+    int getId() {
+        return id;
+    }
 
-  public int getHeight() {
-    return this.height;
-  }
+    private int createTexture(final ByteBuffer buf) {
 
-  int getId() {
-    return id;
-  }
+        // Create a new OpenGL texture
+        final int textureId = glGenTextures();
+        // Bind the texture
+        glBindTexture(GL_TEXTURE_2D, textureId);
 
-  private int createTexture(final ByteBuffer buf) {
+        // Tell OpenGL how to unpack the RGBA bytes. Each component is 1 byte size
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    // Create a new OpenGL texture
-    final int textureId = glGenTextures();
-    // Bind the texture
-    glBindTexture(GL_TEXTURE_2D, textureId);
+        // smoothing
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // Tell OpenGL how to unpack the RGBA bytes. Each component is 1 byte size
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        // Upload the texture data
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+                GL_UNSIGNED_BYTE, buf);
 
-    // smoothing
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        // Generate Mip Map
+        glGenerateMipmap(GL_TEXTURE_2D);
 
-    // Upload the texture data
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
-        GL_UNSIGNED_BYTE, buf);
-
-    // Generate Mip Map
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-    return textureId;
-  }
+        return textureId;
+    }
 }

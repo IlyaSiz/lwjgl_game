@@ -4,12 +4,12 @@ import com.sizphoto.shiningproject.engine.items.GameItem;
 
 public interface IHud {
 
-  GameItem[] getGameItems();
+    GameItem[] getGameItems();
 
-  default void cleanup() {
-    GameItem[] gameItems = getGameItems();
-    for (GameItem gameItem : gameItems) {
-      gameItem.getMesh().cleanUp();
+    default void cleanup() {
+        GameItem[] gameItems = getGameItems();
+        for (GameItem gameItem : gameItems) {
+            gameItem.getMesh().cleanUp();
+        }
     }
-  }
 }
