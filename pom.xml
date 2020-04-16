@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.2.RELEASE</version>
+        <version>2.2.5.RELEASE</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -29,7 +29,7 @@
         <mvn.jarplug.version>3.1.2</mvn.jarplug.version>
         <mvn.resplug.version>3.1.0</mvn.resplug.version>
         <lwjgl.version>3.2.3</lwjgl.version>
-        <joml.version>1.9.16</joml.version>
+        <joml.version>1.9.24</joml.version>
     </properties>
 
     <profiles>
